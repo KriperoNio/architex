@@ -104,7 +104,9 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       appBar: AppBar(),
       bottomNavigationBar: const AppNavBar.mainTheme(),
-      body: const ScreenRoomEditor(),
+      body: const SafeArea(
+        child: ScreenRoomEditor(),
+      ),
     );
   }
 }
