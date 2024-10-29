@@ -44,8 +44,6 @@ class _MyAppState extends State<MyApp> {
       // Проверка типа навигации на основе Android SDK версии
       _isButtonNavigation =
           androidInfo.systemFeatures.contains("android.software.home_screen");
-      print(
-          "_isButtonNavigation = $_isButtonNavigation, ${androidInfo.systemFeatures}");
     });
 
     // Запускаем таймер после завершения инициализации
@@ -60,12 +58,7 @@ class _MyAppState extends State<MyApp> {
 
   void _startTimer() {
     _timer = Timer(const Duration(milliseconds: 50), () {
-      print(
-          "SystemChrome = ${_isSamsungDevice}, ${_isTablet}, ${_isButtonNavigation}");
-      print(
-          "SystemChrome = ${_isSamsungDevice && _isTablet && _isButtonNavigation}");
       if (_isSamsungDevice && _isTablet && _isButtonNavigation) {
-        print("SystemUiMode.immersive");
         SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
       } else {
         SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,

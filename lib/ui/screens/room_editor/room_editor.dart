@@ -109,31 +109,42 @@ class _ARScreenState extends State<ARScreen> {
 
   Future<void> onPlaneOrPointTapped(
       List<ARHitTestResult> hitTestResults) async {
-    var singleHitTestResult = hitTestResults.firstWhere(
-        (hitTestResult) => hitTestResult.type == ARHitTestResultType.plane);
-    var newAnchor =
-        ARPlaneAnchor(transformation: singleHitTestResult.worldTransform);
-    bool? didAddAnchor = await arAnchorManager!.addAnchor(newAnchor);
-    if (didAddAnchor!) {
-      anchors.add(newAnchor);
-      // Add note to anchor
-      var newNode = ARNode(
-        type: NodeType.localGLTF2,
-        uri: "assets/models/Avocado.gltf",
-        scale: Vector3(6, 6, 6),
-        position: Vector3(0.0, 0.0, 0.0),
-        rotation: Vector4(1.0, 0.0, 0.0, 0.0),
+    if (hitTestResults.any(
+        (hitTestResult) => hitTestResult.type == ARHitTestResultType.plane)) {
+      var singleHitTestResult = hitTestResults.firstWhere(
+        (hitTestResult) => hitTestResult.type == ARHitTestResultType.plane,
       );
-      bool? didAddNodeToAnchor =
-          await arObjectManager!.addNode(newNode, planeAnchor: newAnchor);
-      if (didAddNodeToAnchor!) {
-        nodes.add(newNode);
+
+      var newAnchor =
+          ARPlaneAnchor(transformation: singleHitTestResult.worldTransform);
+      bool? didAddAnchor = await arAnchorManager!.addAnchor(newAnchor);
+
+      if (didAddAnchor!) {
+        anchors.add(newAnchor);
+
+        var newNode = ARNode(
+          type: NodeType.localGLTF2,
+          uri: "assets/models/Avocado/Avocado.gltf",
+          scale: Vector3(6, 6, 6),
+          position: Vector3(0.0, 0.0, 0.0),
+          rotation: Vector4(1.0, 0.0, 0.0, 0.0),
+        );
+
+        bool? didAddNodeToAnchor =
+            await arObjectManager!.addNode(newNode, planeAnchor: newAnchor);
+        if (didAddNodeToAnchor!) {
+          nodes.add(newNode);
+        } else {
+          // ignore: avoid_print
+          print("Failed to load the model from lib/assets/models/scene.gltf");
+          arSessionManager!.onError("Adding Node to Anchor failed");
+        }
       } else {
-        print("Failed to load the model from lib/assets/models/scene.gltf");
-        arSessionManager!.onError("Adding Node to Anchor failed");
+        arSessionManager!.onError("Adding Anchor failed");
       }
     } else {
-      arSessionManager!.onError("Adding Anchor failed");
+      // ignore: avoid_print
+      print("Plane not found, ignoring tap.");
     }
   }
 
