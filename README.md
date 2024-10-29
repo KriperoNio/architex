@@ -1,6 +1,6 @@
 # architex
 
-A new Flutter project.
+The first my Flutter project with AR func.
 
 ## Getting Started
 
