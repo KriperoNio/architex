@@ -28,7 +28,7 @@ class DraggableSheet extends StatelessWidget {
       maxChildSize: maxChildSize,
       builder: (BuildContext context, ScrollController scrollController) {
         return Container(
-          color: Colors.black,
+          color: Colors.transparent,
           child: SingleChildScrollView(
             controller: scrollController,
             child: Column(

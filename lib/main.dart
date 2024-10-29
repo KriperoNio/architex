@@ -1,33 +1,11 @@
 import 'dart:async';
 import 'package:architex/core/theme/dark.dart';
 import 'package:architex/ui/screens/room_editor/room_editor.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'ui/widgets/AppNavBar.dart';
-/* 
-  - lib/
-   - main.dart                // Главный файл, запуск приложения
-   - core/
-       - constants/           // Константы (цвета, стили, размеры и пр.)
-       - utils/               // Утилиты и хелперы для обработки данных
-       - theme/               // Темы для приложения
-       - router/              // Навигация и роутинг
-   - models/                  // Модели данных
-   - services/                // Сервисы (API, взаимодействие с базой данных)
-   - providers/               // Провайдеры (стейт-менеджмент)
-   - ui/
-       - screens/             // Экраны
-           - home/            // Главный экран
-           - designer/        // Дизайн и VR/AR экран
-           - showroom/        // Экран с виртуальным шоурумом
-           - profile/         // Профиль и настройки
-       - widgets/             // Общие виджеты приложения
-   - data/
-       - repository/          // Репозитории для взаимодействия с данными
-       - local/               // Локальное хранилище и базы данных
-       - remote/              // Внешние API, если есть
-*/
 
 void main() {
   runApp(const MyApp());
@@ -44,10 +22,33 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   Timer? _timer;
+  bool _isTablet = false;
+  bool _isSamsungDevice = false;
+  bool _isButtonNavigation = true;
 
   @override
   void initState() {
     super.initState();
+    _detectDevice();
+  }
+
+  Future<void> _detectDevice() async {
+    final deviceInfo = DeviceInfoPlugin();
+    final androidInfo = await deviceInfo.androidInfo;
+    final isTabletDevice = MediaQuery.of(context).size.shortestSide >= 600;
+
+    setState(() {
+      _isTablet = isTabletDevice;
+      _isSamsungDevice = androidInfo.manufacturer.toLowerCase() == "samsung";
+
+      // Проверка типа навигации на основе Android SDK версии
+      _isButtonNavigation =
+          androidInfo.systemFeatures.contains("android.software.home_screen");
+      print(
+          "_isButtonNavigation = $_isButtonNavigation, ${androidInfo.systemFeatures}");
+    });
+
+    // Запускаем таймер после завершения инициализации
     _startTimer();
   }
 
@@ -59,8 +60,17 @@ class _MyAppState extends State<MyApp> {
 
   void _startTimer() {
     _timer = Timer(const Duration(milliseconds: 50), () {
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-          overlays: [SystemUiOverlay.top]);
+      print(
+          "SystemChrome = ${_isSamsungDevice}, ${_isTablet}, ${_isButtonNavigation}");
+      print(
+          "SystemChrome = ${_isSamsungDevice && _isTablet && _isButtonNavigation}");
+      if (_isSamsungDevice && _isTablet && _isButtonNavigation) {
+        print("SystemUiMode.immersive");
+        SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+      } else {
+        SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+            overlays: [SystemUiOverlay.top]);
+      }
     });
   }
 
@@ -103,7 +113,20 @@ class _MainScreenState extends State<MainScreen> {
     );
     return Scaffold(
       appBar: AppBar(),
-      bottomNavigationBar: const AppNavBar.mainTheme(),
+      bottomNavigationBar: AppNavBar.mainTheme(
+        height: (context.findAncestorStateOfType<_MyAppState>()?._isTablet ??
+                    false) &&
+                (context
+                        .findAncestorStateOfType<_MyAppState>()
+                        ?._isSamsungDevice ??
+                    false) &&
+                (context
+                        .findAncestorStateOfType<_MyAppState>()
+                        ?._isButtonNavigation ??
+                    false)
+            ? 160 // удвоенная высота NavBar
+            : 80,
+      ),
       body: const SafeArea(
         child: ScreenRoomEditor(),
       ),
