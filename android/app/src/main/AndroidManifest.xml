@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"> 
  
     <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-feature android:name="android.hardware.camera" android:required="true"/>
     <uses-feature android:name="android.hardware.camera.autofocus"/>
     <uses-feature android:name="android.hardware.camera.ar"/>
@@ -9,7 +10,8 @@
     <application
         android:label="ARChiteX"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:usesCleartextTraffic="true">
 
         <activity
             android:name=".MainActivity"

@@ -105,7 +105,7 @@ class _MainScreenState extends State<MainScreen> {
           systemNavigationBarColor: Colors.transparent),
     );
     return Scaffold(
-      appBar: AppBar(),
+      //appBar: AppBar(),
       bottomNavigationBar: AppNavBar.mainTheme(
         height: (context.findAncestorStateOfType<_MyAppState>()?._isTablet ??
                     false) &&

@@ -39,6 +39,7 @@ dependencies:
   ar_flutter_plugin: ^0.7.3
   vector_math: ^2.1.0
   device_info_plus: ^9.1.2
+  flutter_3d_controller: ^1.2.1
 
 dev_dependencies:
   flutter_test:
@@ -64,7 +65,9 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/models/
+    - assets/models/model_1/
+    - assets/models/model_2/
+    - assets/models/model_3/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

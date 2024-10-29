@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_3d_controller/flutter_3d_controller.dart';
 
 class DraggableSheet extends StatelessWidget {
   final double minChildSize;
@@ -15,7 +16,7 @@ class DraggableSheet extends StatelessWidget {
     this.maxChildSize = 0.5,
     this.topContainerColor = Colors.transparent,
     this.handleColor = const Color.fromRGBO(255, 255, 255, 0.9),
-    this.gridItemCount = 30,
+    this.gridItemCount = 3,
   });
 
   @override
@@ -59,14 +60,12 @@ class DraggableSheet extends StatelessWidget {
                   padding: const EdgeInsets.all(8),
                   itemCount: gridItemCount,
                   itemBuilder: (context, index) {
-                    return Container(
-                      margin: const EdgeInsets.symmetric(vertical: 1),
-                      color: Colors.blueGrey[100 * (index % 9)],
+                    return SizedBox(
+                      width: 80,
+                      height: 80,
                       child: Center(
-                        child: Text(
-                          'Item ${index + 1}',
-                          style: const TextStyle(color: Colors.black),
-                        ),
+                        child: Flutter3DViewer(
+                            src: "assets/models/model_${index + 1}/model.glb"),
                       ),
                     );
                   },

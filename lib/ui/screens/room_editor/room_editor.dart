@@ -46,6 +46,7 @@ class _ARScreenState extends State<ARScreen> {
   ARAnchorManager? arAnchorManager;
   List<ARNode> nodes = [];
   List<ARAnchor> anchors = [];
+  int currentModelIndex = 1;
 
   @override
   void dispose() {
@@ -124,7 +125,7 @@ class _ARScreenState extends State<ARScreen> {
 
         var newNode = ARNode(
           type: NodeType.localGLTF2,
-          uri: "assets/models/Avocado/Avocado.gltf",
+          uri: "assets/models/model_3/model.gltf",
           scale: Vector3(6, 6, 6),
           position: Vector3(0.0, 0.0, 0.0),
           rotation: Vector4(1.0, 0.0, 0.0, 0.0),
