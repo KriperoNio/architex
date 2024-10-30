@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:architex/core/theme/dark.dart';
-import 'package:architex/ui/screens/room_editor/room_editor.dart';
+import 'package:architex/ui/screens/room_editor/RoomEditorScreen.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -40,13 +40,9 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       _isTablet = isTabletDevice;
       _isSamsungDevice = androidInfo.manufacturer.toLowerCase() == "samsung";
-
-      // Проверка типа навигации на основе Android SDK версии
       _isButtonNavigation =
           androidInfo.systemFeatures.contains("android.software.home_screen");
     });
-
-    // Запускаем таймер после завершения инициализации
     _startTimer();
   }
 

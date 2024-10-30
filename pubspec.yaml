@@ -68,6 +68,9 @@ flutter:
     - assets/models/model_1/
     - assets/models/model_2/
     - assets/models/model_3/
+    - assets/models/model_4/
+    - assets/models/model_5/
+    - assets/models/model_6/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
