@@ -1,4 +1,4 @@
-# architex
+# ARchiteX
 
 The first my Flutter project with AR func.
 
