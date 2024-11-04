@@ -2,7 +2,12 @@
 
 The first my Flutter project with AR func.
 
-## Getting Started
+## Attention 
+
+The project has been postponed! Due to the perfection of this technology, Google did not support all phones, in general, devices, which slowed down development, I had to work on a tablet. I guess there are AR cores in addition to Google services for AR, but lack of time, fatigue and the first punch forced the project to be postponed. 🥲
+
+
+## Getting Started 
 
 This project is a starting point for a Flutter application.
 
